@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using TimeTracker.Common;
+using TimeTracker.Common.Json;
 using TimeTracker.DAL;
 using TimeTracker.DAL.Contracts;
 using TimeTracker.DAL.Repositories;
@@ -25,6 +28,21 @@ builder.Services.AddRazorPages();
 RegisterDataAccessInfrastructure(builder.Services);
 RegisterBusinessInfrastructure(builder.Services);
 
+builder.Services.AddControllersWithViews(o =>
+{
+    o.Filters.Add(new ResponseCacheAttribute { NoStore = true, Location = ResponseCacheLocation.None });
+})
+.AddControllersAsServices()
+.AddViewComponentsAsServices()
+.AddNewtonsoftJson(o =>
+{
+    o.SerializerSettings.Merge(JsonSerializerSettingsProvider.GetDefault());
+
+    // By default "$type" property is expected to be the first in json of request body, but in reality it's not always the case.
+    // This behaviour can be changed using MetadataPropertyHandling option (see https://github.com/JamesNK/Newtonsoft.Json/issues/1653).
+    o.SerializerSettings.MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,7 +65,13 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapRazorPages();
+});
 
 app.Run();
 

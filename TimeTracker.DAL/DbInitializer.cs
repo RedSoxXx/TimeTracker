@@ -10,7 +10,7 @@ namespace TimeTracker.DAL
 {
     public static class DbInitializer
     {
-        private const string SuperAdminEmail = "noreply@rts.com";
+        private const string SuperAdminEmail = "noreply@timetracker.com";
         private const string SuperAdminPassword = "123";
 
         public static void Seed(UserManager<User> userManager, RoleManager<Role> roleManager)
