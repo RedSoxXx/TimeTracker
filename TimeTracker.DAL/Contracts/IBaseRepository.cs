@@ -14,11 +14,11 @@ namespace TimeTracker.DAL.Contracts
         Task SaveAsync(IEnumerable<TEntity> entities);
         Task DeleteAsync(TEntity entity, bool isSoftDelete = true);
         Task DeleteAsync(IEnumerable<TEntity> entities, bool isSoftDelete = true);
-        Task DeleteAsync(int id, bool isSoftDelete = true);
+        Task DeleteAsync(long id, bool isSoftDelete = true);
         Task DeleteAsync(Expression<Func<TEntity, bool>> where, bool isSoftDelete = true);
 
-        Task<TEntity> GetByIdAsync(int id, bool throwExceptionIfNotFound = true);
-        Task<TResult> GetByIdAsync<TResult>(int id, Expression<Func<TEntity, TResult>> selector, bool throwExceptionIfNotFound = true);
+        Task<TEntity> GetByIdAsync(long id, bool throwExceptionIfNotFound = true);
+        Task<TResult> GetByIdAsync<TResult>(long id, Expression<Func<TEntity, TResult>> selector, bool throwExceptionIfNotFound = true);
 
         IQueryable<TEntity> GetAll(bool needDeleted = false);
         IQueryable<TResult> GetAll<TResult>(Expression<Func<TEntity, TResult>> selector, bool needDeleted = false);

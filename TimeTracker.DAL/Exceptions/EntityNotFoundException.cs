@@ -12,7 +12,7 @@ namespace TimeTracker.DAL.Exceptions
         {
         }
 
-        public EntityNotFoundException(Type entityType, int entityId) : this($"Failed to find entity of type '{entityType}' by id '{entityId}'.")
+        public EntityNotFoundException(Type entityType, long entityId) : this($"Failed to find entity of type '{entityType}' by id '{entityId}'.")
         {
         }
     }

@@ -102,7 +102,7 @@ namespace TimeTracker.DAL.Repositories
             }
         }
 
-        public virtual async Task DeleteAsync(int id, bool isSoftDelete = true)
+        public virtual async Task DeleteAsync(long id, bool isSoftDelete = true)
         {
             var found = await GetByIdAsync(id, isSoftDelete);
             await DeleteAsync(found);
@@ -116,7 +116,7 @@ namespace TimeTracker.DAL.Repositories
             }
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(int id, bool throwExceptionIfNotFound = true)
+        public virtual async Task<TEntity> GetByIdAsync(long id, bool throwExceptionIfNotFound = true)
         {
             var found = await DbSet.FindAsync(id);
 
@@ -126,7 +126,7 @@ namespace TimeTracker.DAL.Repositories
             return found;
         }
 
-        public virtual async Task<TResult> GetByIdAsync<TResult>(int id, Expression<Func<TEntity, TResult>> selector, bool throwExceptionIfNotFound = true)
+        public virtual async Task<TResult> GetByIdAsync<TResult>(long id, Expression<Func<TEntity, TResult>> selector, bool throwExceptionIfNotFound = true)
         {
             var result = await GetMany(e => e.Id == id, selector).Take(1).ToArrayAsync();
             if (!result.Any() && throwExceptionIfNotFound)

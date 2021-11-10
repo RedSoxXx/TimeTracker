@@ -10,7 +10,7 @@ using TimeTracker.Data.Identity;
 namespace TimeTracker.Controllers
 {
     [AuthorizeWithPassword(Order = 0)]
-    public class MigrationController : Controller
+    public partial class MigrationController : Controller
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
